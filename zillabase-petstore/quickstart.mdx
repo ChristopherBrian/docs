@@ -1,0 +1,39 @@
+---
+title: 'Quickstart'
+description: 'Set up and try out the Petstore example'
+---
+
+Ensure that you run the following commands in order do try the Petstore example.
+
+<Steps>
+  <Step title="Install Zillabase">
+    ```bash
+    brew tap aklivity/tap
+    
+    brew install zillabase
+    ```
+  </Step>
+  <Step title="Initialize a Zillabase project">
+    ```bash
+    zillabase init
+    ```
+  </Step>
+  <Step title="Start a Zillabase stack">
+    ```bash
+    zillabase start
+    ```
+
+    If successful, the following output will be displayed.
+    
+    ```bash
+    3.2.3: Pulling from bitnami/kafka
+    latest: Pulling from risingwavelabs/risingwave
+    latest-release: Pulling from apicurio/apicurio-registry-mem
+    latest: Pulling from bitnami/keycloak
+    seed-kafka.yaml processed successfully!
+    Registered AsyncAPI spec: kafka-asyncapi
+    Registered AsyncAPI spec: http-asyncapi
+    Config Server is populated with zilla.yaml
+    ```
+  </Step>
+</Steps>

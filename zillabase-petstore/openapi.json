@@ -1,0 +1,167 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Zillabase Petstore API",
+    "description": "Typical Petstore API example implemented using Zillabase, showcases typical RESTful interactions for managing a fictional pet store",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080"
+    }
+  ],
+  "paths": {
+    "/petstore_pets": {
+      "post": {
+        "description": "Creates a new pet in the pet store",
+        "requestBody": {
+          "description": "Pet to add to the pet store",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Pet"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Pet entry retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Pet"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Fetch all pets",
+        "description": "Retrieve all pet entries from the pet store. The request is forwarded to the Kafka topic 'petstore_pets'.",
+        "x-topic": "petstore_pets",
+        "responses": {
+          "200": {
+            "description": "A list of pets",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Pet"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/petstore_pets/{id}": {
+      "put": {
+        "summary": "Update pet by the key",
+        "description": "Update an existing pet entry by its key. The request is forwarded to the Kafka topic 'petstore_pets'.",
+        "x-topic": "petstore_pets",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the pet to update",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Updated pet object",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Pet"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Entry updated"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete pet by the key",
+        "description": "Delete a pet entry using its key. The request is forwarded to the Kafka topic 'petstore_pets'.",
+        "x-topic": "petstore_pets",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the pet to delete",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Entry deleted"
+          }
+        }
+      },
+      "get": {
+        "summary": "Fetch pet by the key",
+        "description": "Retrieve a single pet entry by its key. The request is forwarded to the Kafka topic 'petstore_pets'.",
+        "x-topic": "petstore_pets",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the pet to fetch",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Pet entry retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Pet"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Pet": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The unique identifier for the pet"
+          },
+          "breed": {
+            "type": "string",
+            "description": "The breed of the pet"
+          }
+        },
+        "required": ["id", "breed"]
+      }
+    }
+  }
+}
